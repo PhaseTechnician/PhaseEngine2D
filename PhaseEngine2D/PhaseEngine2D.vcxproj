@@ -105,7 +105,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:"libcmt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -136,18 +136,30 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3rdparty\opengl\src\glad.c" />
+    <ClCompile Include="src\BGT\src\BGT.cpp" />
+    <ClCompile Include="src\FontLoader\src\FontLoader.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rdparty\opengl\src\stb_image.h" />
+    <ClInclude Include="src\BGT\src\BGT.h" />
+    <ClInclude Include="src\FontLoader\src\FontLoader.h" />
+    <ClInclude Include="src\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="shader\solidColor.frag" />
+    <None Include="shader\solidColor.vert" />
+    <None Include="src\BGT\shader\bgt.frag" />
+    <None Include="src\BGT\shader\bgt.vert" />
+    <None Include="src\BGT\shader\font.frag" />
+    <None Include="src\BGT\shader\font.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

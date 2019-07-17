@@ -21,13 +21,49 @@
     <ClCompile Include="src\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BGT\src\BGT.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FontLoader\src\FontLoader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rdparty\opengl\src\stb_image.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BGT\src\BGT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FontLoader\src\FontLoader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="shader\solidColor.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="shader\solidColor.vert">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="src\BGT\shader\bgt.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="src\BGT\shader\bgt.vert">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="src\BGT\shader\font.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="src\BGT\shader\font.vert">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
