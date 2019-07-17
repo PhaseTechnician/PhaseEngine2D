@@ -21,13 +21,16 @@
     <ClCompile Include="src\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Shader.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\BGT\src\BGT.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\FontLoader\src\FontLoader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture\TextureResource.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shader\Shader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,13 +38,16 @@
     <ClInclude Include="3rdparty\opengl\src\stb_image.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\Shader.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="src\BGT\src\BGT.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\FontLoader\src\FontLoader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Texture\TextureResource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shader\Shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

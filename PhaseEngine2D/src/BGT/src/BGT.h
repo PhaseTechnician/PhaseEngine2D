@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include "..\..\FontLoader\src\FontLoader.h"
+#include "..\..\Texture\TextureResource.h"
 
 using namespace glm;
 /*
@@ -47,6 +48,10 @@ namespace BGT {
 		void write(wstring message, float x, float y);
 		//文字垂直书写 注意使用L""
 		void writeVertical(wstring message, float x, float y);
+		//绘制图片
+		void drawBitmap(string imgPath, float x, float y);
+		void drawBitmap(string imgPath, float p1x, float p1y, float p2x, float p2y);
+		void drawBitmap(string imgPath, Rect rect);
 		//绘制属性设置
 		void changePen(Color color);
 		void changeBrush(Color color);
@@ -61,12 +66,14 @@ namespace BGT {
 		unsigned int textShaderID;
 		Color penColor;
 		Color brushColor;
+		TextureResource* textureResource;
 		//避免多次重复创建显存，对定长图元进行保存
 		unsigned int lineVAO, lineVBO;
 		unsigned int rectVAO, rectVBO;
 		unsigned int circleVAO, circleVBO;
 		unsigned int triangleVAO, triangleVBO;
 		unsigned int textVAO, textVBO, textTexture;
+		unsigned int bitmapVAO, bitmapVBO;
 		float *unitCircle;
 		FontLoader *loader;
 		//临时字符尺寸
@@ -77,6 +84,7 @@ namespace BGT {
 		void initCircle();
 		void initTriangle();
 		void initTextDrawer();
+		void initTextureDrawer();
 		unsigned int compileShader(string vertShader, string fragShader);
 		void reUploadProjection();
 	};

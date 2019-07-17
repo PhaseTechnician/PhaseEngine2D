@@ -16,6 +16,7 @@ BGT::BGT::BGT(GLFWwindow * tragetWindow , string font)
 	this->initCircle();
 	this->initTriangle();
 	this->initTextDrawer();
+	this->initTextureDrawer();
 	this->shaderID = compileShader("F:\\PhaseEngine2D\\PhaseEngine2D\\src\\BGT\\shader\\bgt.vert", "F:\\PhaseEngine2D\\PhaseEngine2D\\src\\BGT\\shader\\bgt.frag");
 	this->textShaderID = compileShader("F:\\PhaseEngine2D\\PhaseEngine2D\\src\\BGT\\shader\\font.vert", "F:\\PhaseEngine2D\\PhaseEngine2D\\src\\BGT\\shader\\font.frag");
 	this->reUploadProjection();
@@ -107,6 +108,23 @@ void BGT::BGT::initTextDrawer()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(coord), coord, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)(8*sizeof(float)));
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+}
+
+void BGT::BGT::initTextureDrawer()
+{
+	glGenVertexArrays(1, &this->bitmapVAO);
+	glGenBuffers(1, &this->bitmapVBO);
+	glBindVertexArray(bitmapVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, this->bitmapVBO);
+	float coord[] = {
+			 0.1f,0.1f,-0.1f,0.1f,-0.1f,-0.1f, 0.1f,-0.1f,
+			 1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,1.0f,1.0f,
+	};
+	glBufferData(GL_ARRAY_BUFFER, sizeof(coord), coord, GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)(8 * sizeof(float)));
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 }
@@ -298,6 +316,21 @@ void BGT::BGT::writeVertical(wstring message, float x, float y)
 		write(Char, x, tempy);
 		tempy -= charHeight;
 	}
+}
+
+void BGT::BGT::drawBitmap(string imgPath, float x, float y)
+{
+	TextureResource::ImgInfo info;
+	if (!textureResource->applyTexture(imgPath, &info)) {
+		//³öÏÖ´íÎó
+		return;
+	}
+	glUseProgram(textShaderID);
+	glBindVertexArray(textVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+	float coord[8] = { x + info.width,y + info.height,x ,y + info.height,x ,y ,x + info.width,y };
+	glBufferSubData(GL_ARRAY_BUFFER, 0, 8 * sizeof(float), coord);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }
 
 void BGT::BGT::changePen(Color color)

@@ -144,13 +144,15 @@
     <ClCompile Include="src\BGT\src\BGT.cpp" />
     <ClCompile Include="src\FontLoader\src\FontLoader.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\shader\Shader.cpp" />
+    <ClCompile Include="src\Texture\TextureResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rdparty\opengl\src\stb_image.h" />
     <ClInclude Include="src\BGT\src\BGT.h" />
     <ClInclude Include="src\FontLoader\src\FontLoader.h" />
-    <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\shader\Shader.h" />
+    <ClInclude Include="src\Texture\TextureResource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

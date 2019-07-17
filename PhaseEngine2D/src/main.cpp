@@ -6,10 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "..\3rdparty\opengl\src\stb_image.h"
 
-#include "Shader.h"
+#include "shader/Shader.h"
 #include "BGT/src/BGT.h"
 #include "FontLoader/src/FontLoader.h"
 
@@ -53,11 +51,12 @@ int main() {
 		bgt.changePen(BGT::Color(1.0f, 1.0f, 0.0f, 1.0f));
 		bgt.drawLine(0, 0, 100, 100);
 		bgt.drawRect(100, 100, 200, 200);
-		bgt.changeTextSize(0, 100);
+		bgt.changeTextSize(0, 40);
 		wstring message = L"终于完成了";
 		bgt.write(L'贪', 200, 200);
 		bgt.write(L'吃', 230, 230);
 		bgt.write(message, 15, 15);
+		bgt.write(L"wweasf", 300, 15);
 		bgt.writeVertical(L"欢迎", 10, 400);
 
 		glfwSwapBuffers(window);
