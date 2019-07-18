@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="3rdparty\opengl\src\stb_image.h" />
     <ClInclude Include="src\BGT\src\BGT.h" />
+    <ClInclude Include="src\Debug.h" />
     <ClInclude Include="src\FontLoader\src\FontLoader.h" />
     <ClInclude Include="src\shader\Shader.h" />
     <ClInclude Include="src\Texture\TextureResource.h" />
@@ -160,6 +161,8 @@
     <None Include="shader\solidColor.vert" />
     <None Include="src\BGT\shader\bgt.frag" />
     <None Include="src\BGT\shader\bgt.vert" />
+    <None Include="src\BGT\shader\bitmap.frag" />
+    <None Include="src\BGT\shader\bitmap.vert" />
     <None Include="src\BGT\shader\font.frag" />
     <None Include="src\BGT\shader\font.vert" />
   </ItemGroup>

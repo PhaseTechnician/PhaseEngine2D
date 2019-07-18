@@ -8,9 +8,6 @@ FontLoader::FontLoader()
 
 FontLoader::FontLoader(string path)
 {
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	if (FT_Init_FreeType(&libruary)) {
 		std::cout << "FT ERROR INIT LIB" << std::endl;
 	}

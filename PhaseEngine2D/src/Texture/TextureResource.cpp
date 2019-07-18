@@ -3,6 +3,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "..\..\3rdparty\opengl\src\stb_image.h"
 
+
 TextureResource::TextureResource(string dir)
 {
 	this->imgBaseDir = dir;
@@ -26,7 +27,7 @@ inline string TextureResource::getAbsoluteDir(string imgName)
 
 bool TextureResource::addTexture(string imgName)
 {
-	stbi_set_flip_vertically_on_load(true);
+	//stbi_set_flip_vertically_on_load(true);
 	ImgInfo info;
 	unsigned char *data = stbi_load(getAbsoluteDir(imgName).c_str(), &info.width, &info.height, &info.channels, 0);
 	if (data == nullptr) {
@@ -34,13 +35,18 @@ bool TextureResource::addTexture(string imgName)
 	}
 	glGenTextures(1, &info.textureID);
 	glBindTexture(GL_TEXTURE_2D, info.textureID);
+	if (info.channels == 3) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, info.width, info.height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	}
+	else if(info.channels==4){
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, info.width, info.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	}
+	
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, info.width, info.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	textures.insert(pair<string, ImgInfo>(imgName, info));
+	this->textures.insert(pair<string, ImgInfo>(imgName, info));
 	stbi_image_free(data);
 	return true;
 }
@@ -58,10 +64,10 @@ TextureResource::ImgInfo TextureResource::getTexture(string imgName)
 
 bool TextureResource::applyTexture(string imgName)
 {
-	int resultID = getTexture(imgName).width;
-	if (resultID != 0)
+	ImgInfo info = getTexture(imgName);
+	if (info.width != 0)
 	{
-		glBindTexture(GL_TEXTURE_2D, resultID);
+		glBindTexture(GL_TEXTURE_2D, info.textureID);
 		return true;
 	}
 	else {

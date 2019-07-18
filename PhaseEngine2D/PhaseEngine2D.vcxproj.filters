@@ -50,6 +50,9 @@
     <ClInclude Include="src\shader\Shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Debug.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -69,6 +72,12 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="src\BGT\shader\font.vert">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="src\BGT\shader\bitmap.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="src\BGT\shader\bitmap.vert">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

@@ -25,7 +25,7 @@ namespace BGT {
 	public:
 		//简单的图形绘制工具集
 		//BGT();
-		BGT(GLFWwindow* tragetWindow,string font);
+		BGT(GLFWwindow* tragetWindow,string font, string imgDir);
 		//清理绘图资源
 		~BGT();
 		//工具完备性检查
@@ -36,6 +36,7 @@ namespace BGT {
 		//画矩形
 		void drawRect(float p1x, float p1y, float p2x, float p2y);
 		void drawRect(Point p1,Point p2);
+		void drawRect(Rect rect);
 		//画圆	   
 		void drawCircle(float p1x, float p1y, float radius);
 		void drawCircle(Point center, float radius);
@@ -48,9 +49,13 @@ namespace BGT {
 		void write(wstring message, float x, float y);
 		//文字垂直书写 注意使用L""
 		void writeVertical(wstring message, float x, float y);
-		//绘制图片
+		//绘制图片 原始大小
 		void drawBitmap(string imgPath, float x, float y);
+		//绘制图片 自动伸缩 修改顺序可以旋转图形
 		void drawBitmap(string imgPath, float p1x, float p1y, float p2x, float p2y);
+		//绘制图片 自动伸缩 修改顺序可以旋转图形
+		void drawBitmap(string imgPath, Point p1, Point p2);
+		//绘制图片 自动伸缩 修改顺序可以旋转图形
 		void drawBitmap(string imgPath, Rect rect);
 		//绘制属性设置
 		void changePen(Color color);
@@ -64,9 +69,9 @@ namespace BGT {
 		GLFWwindow* window;
 		unsigned int shaderID;
 		unsigned int textShaderID;
+		unsigned int bitmapShaderID;
 		Color penColor;
 		Color brushColor;
-		TextureResource* textureResource;
 		//避免多次重复创建显存，对定长图元进行保存
 		unsigned int lineVAO, lineVBO;
 		unsigned int rectVAO, rectVBO;
@@ -76,6 +81,7 @@ namespace BGT {
 		unsigned int bitmapVAO, bitmapVBO;
 		float *unitCircle;
 		FontLoader *loader;
+		TextureResource* textureResource;
 		//临时字符尺寸
 		int charWidth, charHeight;
 

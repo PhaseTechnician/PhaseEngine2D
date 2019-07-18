@@ -7,7 +7,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-BGT::BGT::BGT(GLFWwindow * tragetWindow , string font)
+
+BGT::BGT::BGT(GLFWwindow * tragetWindow , string font, string imgDir)
 {
 	this->window = tragetWindow;
 	glfwGetWindowSize(this->window, &this->windowWidth, &this->windowHeight);
@@ -19,8 +20,13 @@ BGT::BGT::BGT(GLFWwindow * tragetWindow , string font)
 	this->initTextureDrawer();
 	this->shaderID = compileShader("F:\\PhaseEngine2D\\PhaseEngine2D\\src\\BGT\\shader\\bgt.vert", "F:\\PhaseEngine2D\\PhaseEngine2D\\src\\BGT\\shader\\bgt.frag");
 	this->textShaderID = compileShader("F:\\PhaseEngine2D\\PhaseEngine2D\\src\\BGT\\shader\\font.vert", "F:\\PhaseEngine2D\\PhaseEngine2D\\src\\BGT\\shader\\font.frag");
+	this->bitmapShaderID = compileShader("F:\\PhaseEngine2D\\PhaseEngine2D\\src\\BGT\\shader\\bitmap.vert", "F:\\PhaseEngine2D\\PhaseEngine2D\\src\\BGT\\shader\\bitmap.frag");
 	this->reUploadProjection();
 	this->loader = new FontLoader(font);
+	this->textureResource = new TextureResource(imgDir);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 BGT::BGT::~BGT()
@@ -40,6 +46,12 @@ BGT::BGT::~BGT()
 bool BGT::BGT::isReady()
 {
 	if (this->window == nullptr) {
+		return false;
+	}
+	if (this->loader == nullptr) {
+		return false;
+	}
+	if (this->textureResource == nullptr) {
 		return false;
 	}
 	return true;
@@ -159,7 +171,6 @@ unsigned int BGT::BGT::compileShader(string vertShader, string fragShader)
 	}
 	const char* vShaderCode = vertexCode.c_str();
 	const char* fShaderCode = fragmentCode.c_str();
-
 	// build and compile our shader program
 	// vertex shader
 	int vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -191,7 +202,7 @@ unsigned int BGT::BGT::compileShader(string vertShader, string fragShader)
 	glAttachShader(shaderID, fragmentShader);
 	glLinkProgram(shaderID);
 	// check for linking errors
-	glGetProgramiv(this->shaderID, GL_LINK_STATUS, &success);
+	glGetProgramiv(shaderID, GL_LINK_STATUS, &success);
 	if (!success) {
 		glGetProgramInfoLog(this->shaderID, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
@@ -209,6 +220,9 @@ void BGT::BGT::reUploadProjection()
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(projection));
 	glUseProgram(this->textShaderID);
 	location = glGetUniformLocation(this->textShaderID, "projection");
+	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(projection));
+	glUseProgram(this->bitmapShaderID);
+	location = glGetUniformLocation(this->bitmapShaderID, "projection");
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
@@ -240,6 +254,11 @@ void BGT::BGT::drawRect(float p1x, float p1y, float p2x, float p2y)
 void BGT::BGT::drawRect(Point p1, Point p2)
 {
 	this->drawRect(p1.x, p1.y, p2.x, p2.y);
+}
+
+void BGT::BGT::drawRect(Rect rect)
+{
+	this->drawRect(rect.x, rect.y, rect.z, rect.w);
 }
 
 void BGT::BGT::drawCircle(float p1x, float p1y, float radius)
@@ -320,17 +339,42 @@ void BGT::BGT::writeVertical(wstring message, float x, float y)
 
 void BGT::BGT::drawBitmap(string imgPath, float x, float y)
 {
+	glUseProgram(bitmapShaderID);
 	TextureResource::ImgInfo info;
 	if (!textureResource->applyTexture(imgPath, &info)) {
-		//³öÏÖ´íÎó
+		cout << "ERROR NO IMG FIND IN DIR" << imgPath << endl;
 		return;
 	}
-	glUseProgram(textShaderID);
-	glBindVertexArray(textVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+	glBindVertexArray(bitmapVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, bitmapVBO);
 	float coord[8] = { x + info.width,y + info.height,x ,y + info.height,x ,y ,x + info.width,y };
 	glBufferSubData(GL_ARRAY_BUFFER, 0, 8 * sizeof(float), coord);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+}
+
+void BGT::BGT::drawBitmap(string imgPath, float p1x, float p1y, float p2x, float p2y)
+{
+	glUseProgram(bitmapShaderID);
+	TextureResource::ImgInfo info;
+	if (!textureResource->applyTexture(imgPath, &info)) {
+		cout << "ERROR NO IMG FIND IN DIR" << imgPath << endl;
+		return;
+	}
+	glBindVertexArray(bitmapVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, bitmapVBO);
+	float coord[8] = { p1x,p2y,p2x,p2y,p2x,p1y,p1x,p1y };
+	glBufferSubData(GL_ARRAY_BUFFER, 0, 8 * sizeof(float), coord);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+}
+
+void BGT::BGT::drawBitmap(string imgPath, Point p1, Point p2)
+{
+	this->drawBitmap(imgPath, p1.x, p1.y, p2.x, p2.y);
+}
+
+void BGT::BGT::drawBitmap(string imgPath, Rect rect)
+{
+	this->drawBitmap(imgPath, rect.x, rect.y, rect.z, rect.w);
 }
 
 void BGT::BGT::changePen(Color color)
