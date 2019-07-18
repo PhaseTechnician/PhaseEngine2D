@@ -6,6 +6,9 @@
 
 TextureResource::TextureResource(string dir)
 {
+	if (dir[dir.length() - 1] != '\\' && dir[dir.length() - 1] != '/') {
+		dir.append("/");
+	}
 	this->imgBaseDir = dir;
 }
 

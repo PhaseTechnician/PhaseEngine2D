@@ -10,10 +10,6 @@
 #include "shader/Shader.h"
 #include "BGT/src/BGT.h"
 #include "FontLoader/src/FontLoader.h"
-/*
-#define STB_IMAGE_IMPLEMENTATION
-#include "..\3rdparty\opengl\src\stb_image.h"
-*/
 
 using namespace std;
 int main() {
@@ -41,24 +37,17 @@ int main() {
 	}
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	BGT::BGT bgt = BGT::BGT(window,"C:\\Windows\\Fonts\\SIMYOU.TTF","F:\\openGL\\QD\\img\\");
-
+	BGT::BGT bgt = BGT::BGT(window,"C:\\Windows\\Fonts\\SIMYOU.TTF","F:\\PhaseEngine2D\\img");
 
 	while (!glfwWindowShouldClose(window))
 	{
 		/*‰÷»æ≤ø∑÷*/
 		glClearColor(0.2f, 0.5f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-
 		bgt.changePen(BGT::Color(1.0f, 1.0f, 0.0f, 1.0f));
-		bgt.drawLine(0, 0, 100, 100);
-		bgt.drawRect(100, 100, 200, 200);
+		bgt.drawBitmap("steal.png", 0, 0, 800, 600);
 		bgt.changeTextSize(0, 40);
-		bgt.write(L"wweasf", 300, 15);
-		bgt.writeVertical(L"ª∂”≠", 10, 400);
-		bgt.drawBitmap("plane.png", 200,200);
-
+		bgt.write(L"≤‚ ‘≥°æ∞", 0, 560);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

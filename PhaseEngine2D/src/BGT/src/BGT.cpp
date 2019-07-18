@@ -27,6 +27,10 @@ BGT::BGT::BGT(GLFWwindow * tragetWindow , string font, string imgDir)
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	this->changePen(Color(1.0f, 1.0f, 1.0f, 1.0f));
+	this->changeBrush(Color(0.0f, 0.0f, 0.0f, 1.0f));
+	this->changeTextSize(0, 20);
 }
 
 BGT::BGT::~BGT()
